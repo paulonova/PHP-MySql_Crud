@@ -17,4 +17,27 @@ function raw_u($string=""){
     return rawurlencode($string);
 }
 
+//Convert the predefined characters to HTML entities:
+function h($string=""){
+    return htmlspecialchars($string);
+}
+
+
+/**Error messages */
+function error_404(){
+    header($_SERVER['SERVER_PROTOCOL'] . " 404 Not Found");
+    exit();
+}
+
+function error_505(){
+    header($_SERVER['SERVER_PROTOCOL'] . " 505 Internal Server Error");
+    exit();
+}
+
+
+function redirect_to($location){
+    header('Location: '. $location);
+    exit();
+}
+
 ?>

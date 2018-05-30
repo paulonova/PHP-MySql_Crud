@@ -1,5 +1,8 @@
 <?php
 
+ob_start(); //output buffering is turned on
+
+/**define — Defines a named constant ==> define(name,value,case_insensitive)*/
 
 // Assign file paths to PHP constants
 // __FILE__ returns the current path to this file
