@@ -22,7 +22,7 @@ and retrieve data, providing practical advice and examples of best practices.</p
 </ul>
 
 
-<quotes>Paulo Nova</quotes>
+<q>Paulo Nova</q>
 
 
 
