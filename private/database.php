@@ -23,6 +23,7 @@
     }
   }
 
+  //Set in query_functions.php
   function confirm_result_set($result_set) {
     if (!$result_set) {
     	exit("Database query failed.");

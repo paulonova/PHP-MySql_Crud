@@ -1,9 +1,7 @@
 <?php require_once('../../../private/initialize.php'); ?>
 
 <?php
-
   $page_set = find_all_pages();
-
 ?>
 
 <?php $page_title = 'Pages'; ?>
