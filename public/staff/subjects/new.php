@@ -2,6 +2,13 @@
 
 require_once('../../../private/initialize.php');
 
+
+$subject_set = find_all_subjects();
+$subject_count = mysqli_num_rows($subject_set) + 1; // (+1) I´m createing a new record..
+mysqli_free_result($subject_set);
+
+$subject['position'] = $subject_count;
+
 ?>
 
 <?php $page_title = 'Create Subject'; ?>
@@ -22,8 +29,16 @@ require_once('../../../private/initialize.php');
       <dl>
         <dt>Position</dt>
         <dd>
-          <select name="position">
-            <option value="1">1</option>
+        <select name="position">
+            <?php 
+              for ($i=1; $i <= $subject_count ; $i++) { 
+                echo "<option value=\"{$i}\"";
+                if($subject['position'] == $i){
+                  echo "selected";
+                }
+                echo ">{$i}</options>";
+              }            
+            ?>
           </select>
         </dd>
       </dl>
