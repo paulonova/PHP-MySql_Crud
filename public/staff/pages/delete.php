@@ -26,7 +26,7 @@ if(!isset($_GET['id'])) {
 
   <div class="subject delete">
     <h1>Delete Page</h1>
-    <p class = "alert">&#9760; Are you sure you want to delete this page?</p>
+    <p class = "alert">&#9760; You realy want to delete this page?</p>
     <p class="item"><?php echo h($page['menu_name']); ?></p>
 
     <form action="<?php echo url_for('/staff/pages/delete.php?id=' . h(u($page['id']))); ?>" method="post">
@@ -37,5 +37,6 @@ if(!isset($_GET['id'])) {
   </div>
 
 </div>
+
 
 <?php include(SHARED_PATH . '/staff_footer.php'); ?>
