@@ -1,5 +1,7 @@
 <?php
 
+/**SUBJECTS */
+
   function find_all_subjects() {
     global $db;
 
@@ -10,15 +12,15 @@
     return $result;
   }
 
-  function find_all_pages() {
+  function find_all_subjects_id() {
     global $db;
 
-    $sql = "SELECT * FROM pages ";
+    $sql = "SELECT id FROM subjects ";
     $sql .= "ORDER BY position ASC";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
     return $result;
-  }
+  }  
 
   function insert_subject($subject){
     global $db;
@@ -81,6 +83,112 @@
     global $db;
 
     $sql = "DELETE FROM subjects WHERE id='" . $id . "' LIMIT 1";
+    $result = mysqli_query($db, $sql);
+
+    if($result){
+      return true;
+
+    }else{      
+      echo mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
+  }
+
+  function subject_num_rows(){
+    $subject_set = find_all_subjects();
+    $subject_count = mysqli_num_rows($subject_set) + 1; // (+1) I´m createing a new record..
+    mysqli_free_result($subject_set);
+    return $subject_count;
+  }
+
+
+
+  /**PAGES */
+
+  function find_all_pages() {
+    global $db;
+
+    $sql = "SELECT * FROM pages ";
+    $sql .= "ORDER BY position ASC";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    return $result;
+  }
+  
+
+  function page_num_rows(){
+    $page_set = find_all_pages();
+    $page_count = mysqli_num_rows($page_set) + 1; // (+1) I´m createing a new record..
+    mysqli_free_result($page_set);
+    return $page_count;
+  }
+
+  function find_page_by_id($id){
+    global $db;
+
+    $sql = "SELECT * FROM pages WHERE id='" . $id . "'";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $page = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $page; // return an assoc. array
+  }
+
+  function insert_page($page){
+    global $db;
+
+    $sql = "INSERT INTO pages ";
+    $sql .= "(subject_id, menu_name, position, visible, content) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . $page['subject_id'] . "', ";
+    $sql .= "'" . $page['menu_name'] . "', ";
+    $sql .= "'" . $page['position'] . "', ";
+    $sql .= "'" . $page['visible'] . "', ";
+    $sql .= "'" . $page['content'] . "'";
+    $sql .= ")";
+
+    $result = mysqli_query($db, $sql);
+    //For INSERT statements, $result is true/false ..
+
+    if($result){
+      return true;
+    }else{
+      echo mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
+  }
+  
+  function update_page($page){
+
+    global $db;
+
+    $sql = "UPDATE pages SET ";
+    $sql .= "subject_id='" . $page['subject_id'] . "', ";
+    $sql .= "menu_name='" . $page['menu_name'] . "', ";
+    $sql .= "position='" . $page['position'] . "', ";
+    $sql .= "visible='" . $page['visible'] . "', ";
+    $sql .= "content='" . $page['content'] . "' ";
+    $sql .= "WHERE id='" . $page['id'] . "' ";
+    $sql .= "LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+    //For UPDATE statements, $result is true/false ..
+
+    if($result){
+      return true;
+    }else{
+      echo mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
+  }
+
+  function delete_page($id){
+    global $db;
+
+    $sql = "DELETE FROM pages WHERE id='" . $id . "' LIMIT 1";
     $result = mysqli_query($db, $sql);
 
     if($result){
