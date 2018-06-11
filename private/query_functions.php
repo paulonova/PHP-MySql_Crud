@@ -125,6 +125,10 @@
       $errors[] = "Name must be between 2 and 255 characters.";
     }
 
+    if(!has_unique_subject_menu_name($subject['menu_name'])){
+      $errors[] = "Subject Menu name must be unique.";
+    }
+
     // position
     // Make sure we are working with an integer
     //I put in database only 3 digits
@@ -262,11 +266,21 @@
   function validate_page($page) {
     $errors = [];
 
+    // subject_id
+    if(is_blank($page['subject_id'])) {
+      $errors[] = "Subject cannot be blank.";
+    }
+
     // menu_name
     if(is_blank($page['menu_name'])) {
       $errors[] = "Name cannot be blank.";
     } elseif(!has_length($page['menu_name'], ['min' => 2, 'max' => 255])) {
       $errors[] = "Name must be between 2 and 255 characters.";
+    }
+
+    $current_id = $page['id'] ?? '0';
+    if(!has_unique_page_menu_name($page['menu_name'], $current_id)) {
+      $errors[] = "Menu name must be unique.";
     }
 
     // position
@@ -286,6 +300,11 @@
     if(!has_inclusion_of($visible_str, ["0","1"])) {
       $errors[] = "Visible must be true or false.";
     }
+
+    // content
+    if(is_blank($page['content'])) {
+      $errors[] = "Content cannot be blank.";
+    } 
 
     return $errors;
   }

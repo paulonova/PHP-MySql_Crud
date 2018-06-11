@@ -2,6 +2,8 @@
 
 require_once('../../../private/initialize.php');
 
+$subject_count = "";
+
 if(is_post_request()) {
 
   $subject = [];
