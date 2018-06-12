@@ -23,6 +23,10 @@
     }
   }
 
+  function db_escape($conn, $string){
+    return mysqli_real_escape_string($conn, $string);
+  }
+
   //Set in query_functions.php
   function confirm_result_set($result_set) {
     if (!$result_set) {
