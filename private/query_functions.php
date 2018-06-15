@@ -2,10 +2,14 @@
 
 /**SUBJECTS */
 
-  function find_all_subjects() {
+  function find_all_subjects($options=[]) {
     global $db;
 
+    $visible = $options['visible'] ?? false;
     $sql = "SELECT * FROM subjects ";
+    if($visible){
+      $sql.= "WHERE visible = true ";
+    }
     $sql .= "ORDER BY position ASC";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
@@ -123,10 +127,6 @@
       $errors[] = "Name cannot be blank.";
     } elseif(!has_length($subject['menu_name'], ['min' => 2, 'max' => 255])) {
       $errors[] = "Name must be between 2 and 255 characters.";
-    }
-
-    if(!has_unique_subject_menu_name($subject['menu_name'])){
-      $errors[] = "Subject Menu name must be unique.";
     }
 
     // position
@@ -309,10 +309,15 @@
     return $errors;
   }
 
-  function find_pages_by_subject_id($subject_id){
+  function find_pages_by_subject_id($subject_id, $options=[]){
     global $db;
 
-    $sql = "SELECT * FROM pages WHERE subject_id='" . db_escape($db, $subject_id) . "' ";
+    $visible = $options['visible'] ?? false;
+    $sql = "SELECT * FROM pages "; 
+    $sql .= "WHERE subject_id='" . db_escape($db, $subject_id) . "' ";
+    if($visible){
+      $sql .= "AND visible = true "; 
+    } 
     $sql .= "ORDER BY position ASC";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
