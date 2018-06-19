@@ -5,7 +5,7 @@
 if(is_post_request()) {
   // Form was submitted
   $language = $_POST['language'] ?? 'Any';
-  $expire = time() + 60*60*24*365;
+  $expire = time() + 60*60*24*365;  //one year
   setcookie('language', $language, $expire);
 
 } else {
@@ -25,14 +25,12 @@ if(is_post_request()) {
 
     <div id="content">
       <h1>Set Language Preference</h1>
-
       <p>The currently selected language is: <?php echo $language; ?></p>
 
       <form action="<?php echo url_for('/language.php'); ?>" method="post">
-
         <select name="language">
           <?php
-            $language_choices = ['Any', 'English', 'Spanish', 'French', 'German'];
+            $language_choices = ['Any', 'English', 'Spanish', 'Portuguese', 'German'];
             foreach($language_choices as $language_choice) {
               echo "<option value=\"{$language_choice}\"";
               if($language == $language_choice) {

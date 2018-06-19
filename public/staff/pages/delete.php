@@ -9,6 +9,7 @@ if(!isset($_GET['id'])) {
 
   if(is_post_request()){
       delete_page($id);
+      $_SESSION['message'] = 'The page was deleted successfully.';
       redirect_to(url_for('/staff/pages/index.php'));
 
   }else{

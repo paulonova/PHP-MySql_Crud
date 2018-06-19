@@ -1,7 +1,6 @@
 <?php
 
-
-  // is_blank('abcd')
+// is_blank('abcd')
   // * validate data presence
   // * uses trim() so empty spaces don't count
   // * uses === to avoid false positives
@@ -83,7 +82,17 @@
     return strpos($value, $required_string) !== false;
   }
 
-  
+  // has_valid_email_format('nobody@nowhere.com')
+  // * validate correct format for email addresses
+  // * format: [chars]@[chars].[2+ letters]
+  // * preg_match is helpful, uses a regular expression
+  //    returns 1 for a match, 0 for no match
+  //    http://php.net/manual/en/function.preg-match.php
+  function has_valid_email_format($value) {
+    $email_regex = '/\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\Z/i';
+    return preg_match($email_regex, $value) === 1;
+  }
+
   // has_unique_page_menu_name('History')
   // * Validates uniqueness of pages.menu_name
   // * For new records, provide only the menu_name.
@@ -103,6 +112,27 @@
     return $page_count === 0;
   }
 
+  // has_unique_username('johnqpublic')
+  // * Validates uniqueness of admins.username
+  // * For new records, provide only the username.
+  // * For existing records, provide current ID as second argument
+  //   has_unique_username('johnqpublic', 4)
+  function has_unique_username($username, $current_id="0") {
+    global $db;
+
+    $sql = "SELECT * FROM admins ";
+    $sql .= "WHERE username='" . db_escape($db, $username) . "' ";
+    $sql .= "AND id != '" . db_escape($db, $current_id) . "'";
+
+    $result = mysqli_query($db, $sql);
+    $admin_count = mysqli_num_rows($result);
+    mysqli_free_result($result);
+
+    return $admin_count === 0;
+  }
+
+
+
 
   function has_unique_subject_menu_name($menu_name) {
     global $db;
@@ -115,8 +145,6 @@
     mysqli_free_result($subject_set);
 
     return $subject_count === 0;
-  }
-
-  
+  } 
 
 ?>
