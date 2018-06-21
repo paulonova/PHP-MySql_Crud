@@ -1,6 +1,7 @@
 <?php require_once('../../../private/initialize.php'); ?>
 
 <?php
+require_login();
 $id = $_GET['id'] ?? '1'; // PHP > 7.0 ternary func.
 
 $subject = find_subject_by_id($id);
