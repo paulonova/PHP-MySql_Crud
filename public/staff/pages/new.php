@@ -24,7 +24,7 @@ if(is_post_request()) {
 } else {
 
   $page = [];
-  $page['subject_id'] = '';
+  $page['subject_id'] = $_GET['subject_id'] ?? '1';
   $page['menu_name'] = '';
   $page['position'] = '';
   $page['visible'] = '';
@@ -41,7 +41,8 @@ if(is_post_request()) {
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('/staff/pages/index.php'); ?>">&laquo; Back to List</a>
+  <a class="back-link" href="<?php echo url_for('/staff/subjects/show.php?id=' 
+                                    . h(u($page['subject_id']))); ?>">&laquo; Back to Subject Page</a>
 
   <div class="page new">
     <h1>Create Page</h1>
@@ -78,7 +79,7 @@ if(is_post_request()) {
           <dd>
             <select name="position">
               <?php                             
-                for ($i=1; $i <= page_num_rows() ; $i++) { 
+                for ($i=1; $i <= $page_count ; $i++) { 
                   echo "<option value=\"{$i}\"";
                   if($page['position'] == $i){
                     echo "selected";
