@@ -18,7 +18,7 @@ if(!isset($_GET['id'])) {
 
 ?>
 
-<?php $page_title = 'Delete Pagee'; ?>
+<?php $page_title = 'Delete Page'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
 
 <div id="content">
